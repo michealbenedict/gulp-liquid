@@ -1,0 +1,33 @@
+{
+  "name": "gulp-liquid",
+  "version": "0.1.0",
+  "description": "A gulp plugin to parse liquid templates",
+  "keywords": [
+    "gulp plugin",
+    "liquid-template",
+    "liquid",
+    "template"
+  ],
+  "author": {
+    "name": "Micheal Benedict (@micheal)",
+    "email": "micheal@visionmasterdesigns.com",
+    "url": "https://github.com/rowoot"
+  },
+  "repository": "rowoot/gulp-layoutize",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "through2": "*",
+    "gulp-util": "~2.2.0",
+    "liquid-node": "~0.1.2"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  },
+  "license": "MIT"
+}
