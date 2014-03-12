@@ -1,7 +1,7 @@
 {
   "name": "gulp-liquid",
   "version": "0.1.0",
-  "description": "A gulp plugin to parse liquid templates",
+  "description": "A gulp plugin to parse liquid template",
   "keywords": [
     "gulp plugin",
     "liquid-template",
