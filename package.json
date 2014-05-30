@@ -13,7 +13,7 @@
     "email": "micheal@visionmasterdesigns.com",
     "url": "https://github.com/rowoot"
   },
-  "repository": "rowoot/gulp-layoutize",
+  "repository": "rowoot/gulp-liquid",
   "scripts": {
     "test": "mocha"
   },
