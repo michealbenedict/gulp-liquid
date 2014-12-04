@@ -1,17 +1,17 @@
 'use strict'
 
-var path		= require('path');
-var gutil 		= require('gulp-util');
-var through 	= require('through2');
-var fs 			= require('fs');
-var Liquid 		= require("liquid-node");
+var path        = require('path');
+var gutil       = require('gulp-util');
+var through     = require('through2');
+var fs          = require('fs');
+var Liquid      = require("liquid-node");
 var PluginError = gutil.PluginError;
 
 /*
  * gulp-liquid
  * @param opts.locals {Object} - Locals that should be passed to files
  * @param opts.tags {Object} - Locals that should be passed to files
-**/
+ **/
 module.exports = function (opts) {
 	opts = opts || {};
 
@@ -19,6 +19,12 @@ module.exports = function (opts) {
 		/* Register liquid tags prior to processing */
 		Object.keys(opts.tags).forEach(function (tag) {
 			Liquid.Template.registerTag(tag, opts.tags[tag]);
+		});
+	}
+
+	if ( opts.filters && typeof opts.filters == "object" ) {
+		Object.keys(opts.filters).forEach(function (filter) {
+			Liquid.Template.registerFilter(filter, opts.filters[filter]);
 		});
 	}
 
@@ -32,8 +38,7 @@ module.exports = function (opts) {
 		}
 
 		if (file.isStream()) {
-			this.emit("error",
-				new gutil.PluginError("gulp-liquid", "Stream content is not supported"));
+			this.emit("error", new gutil.PluginError("gulp-liquid", "Stream content is not supported"));
 			return callback();
 		}
 
@@ -42,12 +47,12 @@ module.exports = function (opts) {
 			promise = template.render(opts.locals);
 
 			promise.then(function (output) {
-		        file.contents = new Buffer(output);
-		        this.push(file);
-		        callback();
-    		}.bind(this), function (err) {
-    			new PluginError('gulp-liquid', 'Error during conversion');
-    		});
+				file.contents = new Buffer(output);
+				this.push(file);
+				callback();
+			}.bind(this), function (err) {
+				new PluginError('gulp-liquid', 'Error during conversion');
+			});
 		}
 	}
 
