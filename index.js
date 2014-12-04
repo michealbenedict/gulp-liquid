@@ -15,16 +15,18 @@ var PluginError = gutil.PluginError;
 module.exports = function (opts) {
 	opts = opts || {};
 
+        var engine = new Liquid.Engine;
+
 	if ( opts.tags && typeof opts.tags == "object" ) {
 		/* Register liquid tags prior to processing */
 		Object.keys(opts.tags).forEach(function (tag) {
-			Liquid.Template.registerTag(tag, opts.tags[tag]);
+			engine.registerTag(tag, opts.tags[tag]);
 		});
 	}
 
 	if ( opts.filters && typeof opts.filters == "object" ) {
 		Object.keys(opts.filters).forEach(function (filter) {
-			Liquid.Template.registerFilter(filter, opts.filters[filter]);
+			engine.registerFilter(filter, opts.filters[filter]);
 		});
 	}
 
@@ -43,8 +45,7 @@ module.exports = function (opts) {
 		}
 
 		if (file.isBuffer()) {
-			template = Liquid.Template.parse(file.contents.toString());
-			promise = template.render(opts.locals);
+                        promise = engine.parseAndRender(file.contents.toString(), opts.locals);
 
 			promise.then(function (output) {
 				file.contents = new Buffer(output);
