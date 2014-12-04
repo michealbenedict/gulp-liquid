@@ -26,7 +26,7 @@ module.exports = function (opts) {
 
 	if ( opts.filters && typeof opts.filters == "object" ) {
 		Object.keys(opts.filters).forEach(function (filter) {
-			engine.registerFilter(filter, opts.filters[filter]);
+			engine.registerFilters(opts.filters);
 		});
 	}
 
