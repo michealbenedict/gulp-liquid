@@ -37,6 +37,16 @@ Type: `Object`
 Default: `{}`
 Required: `true`
 
+#### options.tags
+Type: `Object`
+Default: `null`
+Required: `false`
+
+#### options.filters
+Type: `Object`
+Default: `null`
+Required: `false`
+
 The locals object is passed as template variables to the liquid templating engine.
 
 ## License
