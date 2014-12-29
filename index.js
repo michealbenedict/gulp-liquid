@@ -25,16 +25,10 @@ module.exports = function (opts) {
     }
 
     if ( opts.filters && typeof opts.filters == "object" ) {
-        Object.keys(opts.filters).forEach(function (filter) {
-            engine.registerFilters(opts.filters);
-        });
+        engine.registerFilters(opts.filters);
     }
 
     function liquid (file, enc, callback) {
-        /*jshint validthis:true*/
-        var template;
-        var promise;
-
         if (file.isNull()) {
             return callback();
         }
@@ -45,14 +39,19 @@ module.exports = function (opts) {
         }
 
         if (file.isBuffer()) {
-            engine.parseAndRender(file.contents.toString(), opts.locals)
+            var self = this;
+
+            engine.parse(file.contents.toString())
+            .then(function (template) {
+                return template.render(opts.locals);
+            })
             .then(function (output) {
                 file.contents = new Buffer(output);
-                this.push(file);
+                self.push(file);
                 callback();
             })
             .catch(function (err) {
-                new PluginError('gulp-liquid', err, { showStack: true });
+                self.emit("error", new PluginError("gulp-liquid", "Error during conversion: " + err.message, { showStack: true }));
             })
             .done();
         }

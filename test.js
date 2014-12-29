@@ -27,3 +27,21 @@ it('should return valid output', function (cb) {
         contents: new Buffer('hi {{name | casecamel}}')
     }));
 });
+
+it('should throw on error', function (cb) {
+    var stream = liquid({
+        locals: {
+            name: "tobi"
+        }
+    });
+
+    stream.on('error', function (err) {
+        assert(typeof err, gutil.PluginError);
+        cb();
+    });
+
+    stream.write(new gutil.File({
+        path: 'file.liquid',
+        contents: new Buffer('hi {{name | casecamel}}')
+    }));
+});
